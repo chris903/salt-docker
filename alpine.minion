@@ -1,0 +1,11 @@
+FROM alpine
+MAINTAINER u@mupp.et
+
+RUN apk update && \
+    apk upgrade && \
+    apk add salt-minion virt-what
+
+RUN sed -i "s|#master: salt|master: salt-master|g" /etc/salt/minion
+
+ENTRYPOINT ["salt-minion", "-l", "debug"]
+
